@@ -1,0 +1,42 @@
+plugins {
+    id 'java'
+    id 'java-library'
+    id 'org.springframework.boot' version '4.0.2' apply false
+    id 'io.spring.dependency-management' version '1.1.7' apply false
+}
+
+allprojects {
+    group = 'com.tiffanyslittlekorea'
+    version = '0.0.1-SNAPSHOT'
+
+    repositories {
+        mavenCentral()
+    }
+}
+
+subprojects {
+    if (project.name != 'tlk-ui') {
+        apply plugin: 'java-library'
+
+        java {
+            toolchain {
+                languageVersion = JavaLanguageVersion.of(21)
+            }
+        }
+
+        configurations {
+            compileOnly {
+                extendsFrom annotationProcessor
+            }
+        }
+
+        dependencies {
+            testImplementation platform('org.junit:junit-bom:5.10.0')
+            testImplementation 'org.junit.jupiter:junit-jupiter'
+        }
+
+        tasks.withType(Test).configureEach {
+            useJUnitPlatform()
+        }
+    }
+}

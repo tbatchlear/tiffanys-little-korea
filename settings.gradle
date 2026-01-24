@@ -1,0 +1,8 @@
+rootProject.name = 'tiffanys-little-korea'
+
+include 'tlk-web'
+include 'tlk-service'
+include 'tlk-data'
+include 'tlk-ui'
+include 'tlk-domain'
+

@@ -1,0 +1,9 @@
+plugins {
+    id 'java-library'
+    id 'io.spring.dependency-management'
+}
+
+dependencies {
+    api project(':tlk-domain')
+    implementation project(':tlk-data') // if service calls repositories
+}
