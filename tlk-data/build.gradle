@@ -1,6 +1,8 @@
+import com.tiffanyslittlekorea.gradle.Env
+
 buildscript {
     dependencies {
-        classpath "org.flywaydb:flyway-database-postgresql:${rootProject.ext.flywayVersion}"
+        classpath "org.flywaydb:flyway-database-postgresql:${libs.versions.flyway.get()}"
     }
 }
 
@@ -13,26 +15,7 @@ dependencies {
     runtimeOnly libs.postgresql
 }
 
-def loadEnvFile() {
-    def env = [:]
-    def envFile = file("${rootProject.projectDir}/.env")
-    if (envFile.exists()) {
-        envFile.eachLine { line ->
-            def trimmed = line.trim()
-            if (trimmed && !trimmed.startsWith("#")) {
-                def idx = trimmed.indexOf("=")
-                if (idx > 0) {
-                    def key = trimmed.substring(0, idx).trim()
-                    def value = trimmed.substring(idx + 1).trim()
-                    env[key] = value
-                }
-            }
-        }
-    }
-    env
-}
-
-def env = loadEnvFile()
+def env = Env.load(project)
 
 flyway {
     url = env['TLK_DB_URL'] ?: "jdbc:postgresql://localhost:5432/${env['POSTGRES_DB'] ?: 'tlk_dev'}"
