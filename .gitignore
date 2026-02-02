@@ -33,20 +33,19 @@ out/
 
 ### VS Code ###
 .vscode/
+!tlk-ui/.vscode/
+!tlk-ui/.vscode/extensions.json
 
-### Node / React (tlk-ui) ###
-tlk-ui/node_modules/
-tlk-ui/dist/
-tlk-ui/.vite/
-tlk-ui/.cache/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
+### Logs ###
+*.log
 
 ### OS junk ###
 .DS_Store
 Thumbs.db
+ehthumbs.db
+Desktop.ini
 
 ### Local env ###
 .env
+.env.*
+!.env.example
