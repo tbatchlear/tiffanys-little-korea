@@ -1,6 +1,6 @@
 buildscript {
     dependencies {
-        classpath "org.flywaydb:flyway-database-postgresql:12.0.0"
+        classpath "org.flywaydb:flyway-database-postgresql:11.14.1"
     }
 }
 
@@ -8,12 +8,11 @@ buildscript {
 plugins {
     id 'java-library'
     id 'io.spring.dependency-management'
-    id 'org.flywaydb.flyway' version '12.0.0'
+    id 'org.flywaydb.flyway' version '11.14.1'
 }
 
 dependencies {
     api project(':tlk-domain')
-    implementation 'org.flywaydb:flyway-core:12.0.0'
     runtimeOnly 'org.postgresql:postgresql:42.7.9'
 }
 
@@ -42,5 +41,5 @@ flyway {
     url = env['TLK_DB_URL'] ?: "jdbc:postgresql://localhost:5432/${env['POSTGRES_DB'] ?: 'tlk_dev'}"
     user = env['TLK_DB_USER'] ?: env['POSTGRES_USER']
     password = env['TLK_DB_PASSWORD'] ?: env['POSTGRES_PASSWORD']
-    locations = ['filesystem:src/main/resources/db/migrations']
+    locations = ['filesystem:src/main/resources/db/migration']
 }

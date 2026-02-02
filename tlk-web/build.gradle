@@ -3,9 +3,43 @@ plugins {
     id 'io.spring.dependency-management'
 }
 
-dependencies {
-    implementation project(':tlk-service')
+def loadEnvFile() {
+    def env = [:]
+    def envFile = file("${rootProject.projectDir}/.env")
+    if (!envFile.exists()) {
+        return env
+    }
+    envFile.eachLine { line ->
+        def trimmed = line.trim()
+        if (trimmed && !trimmed.startsWith("#")) {
+            def idx = trimmed.indexOf("=")
+            if (idx > 0) {
+                def key = trimmed.substring(0, idx).trim()
+                def value = trimmed.substring(idx + 1).trim()
+                env[key] = value
+            }
+        }
+    }
+    env
+}
 
-    implementation 'org.springframework.boot:spring-boot-starter-web'
+tasks.named("bootRun") {
+    doFirst {
+        def env = loadEnvFile()
+        environment env
+    }
+}
+
+dependencies {
+    implementation project(':tlk-service'),
+            project(':tlk-data')
+
+    implementation 'org.springframework.boot:spring-boot-starter-web',
+            'org.springframework.boot:spring-boot-starter-jdbc',
+            'org.springframework.boot:spring-boot-starter-flyway'
+
+    runtimeOnly 'org.postgresql:postgresql:42.7.9',
+            'org.flywaydb:flyway-database-postgresql'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }

@@ -5,5 +5,5 @@ plugins {
 
 dependencies {
     api project(':tlk-domain')
-    implementation project(':tlk-data') // if service calls repositories
+    implementation project(':tlk-data')
 }

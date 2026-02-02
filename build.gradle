@@ -17,6 +17,7 @@ allprojects {
 subprojects {
     if (project.name != 'tlk-ui') {
         apply plugin: 'java-library'
+        apply plugin: 'io.spring.dependency-management'
 
         java {
             toolchain {

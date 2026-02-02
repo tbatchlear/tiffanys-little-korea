@@ -1,0 +1,7 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/${POSTGRES_DB:tlk_dev}
+    username: ${POSTGRES_USER:tlk_dev}
+    password: ${POSTGRES_PASSWORD:}
+  flyway:
+    enabled: true
