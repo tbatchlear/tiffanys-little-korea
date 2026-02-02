@@ -1,6 +1,5 @@
 plugins {
-    id 'org.springframework.boot'
-    id 'io.spring.dependency-management'
+    alias(libs.plugins.spring.boot)
 }
 
 def loadEnvFile() {
@@ -34,12 +33,12 @@ dependencies {
     implementation project(':tlk-service'),
             project(':tlk-data')
 
-    implementation 'org.springframework.boot:spring-boot-starter-web',
-            'org.springframework.boot:spring-boot-starter-jdbc',
-            'org.springframework.boot:spring-boot-starter-flyway'
+    implementation libs.spring.boot.starter.web,
+            libs.spring.boot.starter.jdbc,
+            libs.spring.boot.starter.flyway
 
-    runtimeOnly 'org.postgresql:postgresql:42.7.9',
-            'org.flywaydb:flyway-database-postgresql'
+    runtimeOnly libs.postgresql,
+            libs.flyway.db.postgres
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }

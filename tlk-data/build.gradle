@@ -1,19 +1,16 @@
 buildscript {
     dependencies {
-        classpath "org.flywaydb:flyway-database-postgresql:11.14.1"
+        classpath "org.flywaydb:flyway-database-postgresql:${rootProject.ext.flywayVersion}"
     }
 }
 
-
 plugins {
-    id 'java-library'
-    id 'io.spring.dependency-management'
-    id 'org.flywaydb.flyway' version '11.14.1'
+    alias(libs.plugins.flyway)
 }
 
 dependencies {
     api project(':tlk-domain')
-    runtimeOnly 'org.postgresql:postgresql:42.7.9'
+    runtimeOnly libs.postgresql
 }
 
 def loadEnvFile() {
