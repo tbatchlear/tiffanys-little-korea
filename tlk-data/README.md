@@ -16,6 +16,7 @@ Persistence layer: stores and retrieves application data.
 ## TODO (data)
 - [X] PostgreSQL schema + migrations (chosen primary database)
 - [ ] Users/roles/account_status tables
+  - [ ] Add DB CHECK constraints for `role` and `status` after enums stabilize
 - [ ] Profiles:
     - [ ] client profile (personal info, preferences)
     - [ ] stylist profile (bio, socials, specialties)

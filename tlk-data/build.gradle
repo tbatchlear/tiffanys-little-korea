@@ -1,8 +1,46 @@
+buildscript {
+    dependencies {
+        classpath "org.flywaydb:flyway-database-postgresql:12.0.0"
+    }
+}
+
+
 plugins {
     id 'java-library'
     id 'io.spring.dependency-management'
+    id 'org.flywaydb.flyway' version '12.0.0'
 }
 
 dependencies {
     api project(':tlk-domain')
+    implementation 'org.flywaydb:flyway-core:12.0.0'
+    runtimeOnly 'org.postgresql:postgresql:42.7.9'
+}
+
+def loadEnvFile() {
+    def env = [:]
+    def envFile = file("${rootProject.projectDir}/.env")
+    if (envFile.exists()) {
+        envFile.eachLine { line ->
+            def trimmed = line.trim()
+            if (trimmed && !trimmed.startsWith("#")) {
+                def idx = trimmed.indexOf("=")
+                if (idx > 0) {
+                    def key = trimmed.substring(0, idx).trim()
+                    def value = trimmed.substring(idx + 1).trim()
+                    env[key] = value
+                }
+            }
+        }
+    }
+    env
+}
+
+def env = loadEnvFile()
+
+flyway {
+    url = env['TLK_DB_URL'] ?: "jdbc:postgresql://localhost:5432/${env['POSTGRES_DB'] ?: 'tlk_dev'}"
+    user = env['TLK_DB_USER'] ?: env['POSTGRES_USER']
+    password = env['TLK_DB_PASSWORD'] ?: env['POSTGRES_PASSWORD']
+    locations = ['filesystem:src/main/resources/db/migrations']
 }
