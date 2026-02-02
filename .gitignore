@@ -49,3 +49,9 @@ Desktop.ini
 .env
 .env.*
 !.env.example
+
+### Markdown###
+*.md
+!README.md
+!**/README.md
+
